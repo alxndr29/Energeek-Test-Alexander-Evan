@@ -24,6 +24,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::resource('/jobs', JobsController::class);
 Route::resource('/candidates', CandidatesController::class);
 Route::resource('/skills', SkillsController::class);
+
+Route::get('skills/show/{id}', [SkillsController::class, 'show']);
+Route::post('skills/store/', [SkillsController::class, 'store']);
+Route::put('skills/update/{id}', [SkillsController::class, 'update']);
+Route::delete('skills/delete/{id}', [SkillsController::class, 'destroy']);
+
 Route::get('skills/show/{id}', [SkillsController::class, 'show']);
 Route::post('skills/store/', [SkillsController::class, 'store']);
 Route::put('skills/update/{id}', [SkillsController::class, 'update']);

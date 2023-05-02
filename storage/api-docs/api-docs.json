@@ -1,8 +1,8 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "DINKES JATIM - ETIBI API",
-        "description": "Dokumentasi API Web dan Mobile untuk aplikasi DINKES JATIM - ETIBI",
+        "title": "Alexander Evan API",
+        "description": "Dokumentasi API Web Untuk Belajar",
         "contact": {
             "name": "Energeek",
             "email": "energeekmail@gmail.com"
@@ -16,6 +16,29 @@
         }
     ],
     "paths": {
+        "/api/jobs": {
+            "get": {
+                "tags": [
+                    "API|DATA|INDEX JOBS"
+                ],
+                "summary": "Jobs index",
+                "operationId": "6b307032ccc7685af33c78dee9152c22",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            }
+        },
         "/api/skills": {
             "get": {
                 "tags": [

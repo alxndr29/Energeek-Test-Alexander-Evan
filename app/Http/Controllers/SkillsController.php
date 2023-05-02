@@ -40,13 +40,14 @@ class SkillsController extends Controller
     public function index(Request $request)
     {
         $skill = $this->skillInterface->getAll(
-            [
+            select: [
                 'id',
+                'id_hash',
                 'name',
                 'created_at',
                 'updated_at'
             ],
-            function (Builder $query) use ($request) {
+            search: function (Builder $query) use ($request) {
                 $query->where('name', 'LIKE', "%{$request->search}%");
             }
         );
@@ -135,7 +136,7 @@ class SkillsController extends Controller
      */
     public function show($id)
     {
-        $skill = $this->skillInterface->findById(
+        $skill = $this->skillInterface->findByIdHash(
             $id
         );
         if (empty($skill)) {
@@ -209,7 +210,7 @@ class SkillsController extends Controller
                 'errors' => $validator->errors()
             ], 'Silahkan isi form dengan benar terlebih dahulu', 422);
         }
-        $skill = $this->skillInterface->updateById(
+        $skill = $this->skillInterface->updateByIdHash(
             $id,
             $request->all()
         );
@@ -246,7 +247,7 @@ class SkillsController extends Controller
     public function destroy($id)
     {
         DB::beginTransaction();
-        $skill = $this->skillInterface->deletedById($id);
+        $skill = $this->skillInterface->deletedByIdHash($id);
         if (empty($skill)) {
             DB::rollBack();
             return ResponseFormatter::error([], 'Data gagal dihapus', 400);
