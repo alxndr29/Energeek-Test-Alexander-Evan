@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('candidates', function (Blueprint $table) {
             $table->id();
+            $table->uuid('id_hash');
             $table->string('name');
             $table->string('email');
             $table->string('telepon');

@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Jobs;
 use Faker\Factory as Faker;
-
+use Illuminate\Support\Str;
 class JobsSeeder extends Seeder
 {
     /**
@@ -20,7 +20,8 @@ class JobsSeeder extends Seeder
         $faker = Faker::create('id_ID');
         for ($i = 0; $i <= 10; $i++) {
             Jobs::create([
-                'name' => $faker->jobTitle
+                'name' => $faker->jobTitle,
+                'id_hash' => Str::orderedUuid()->toString()
             ]);
         }
     }

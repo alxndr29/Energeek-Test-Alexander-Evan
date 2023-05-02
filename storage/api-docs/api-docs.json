@@ -1,0 +1,257 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "DINKES JATIM - ETIBI API",
+        "description": "Dokumentasi API Web dan Mobile untuk aplikasi DINKES JATIM - ETIBI",
+        "contact": {
+            "name": "Energeek",
+            "email": "energeekmail@gmail.com"
+        },
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Base URL"
+        }
+    ],
+    "paths": {
+        "/api/skills": {
+            "get": {
+                "tags": [
+                    "API|DATA|INDEX SKILLS"
+                ],
+                "summary": "Skills index",
+                "operationId": "c469f11e34d27b393fce9ef0712b8014",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            }
+        },
+        "/api/skills/store/": {
+            "post": {
+                "tags": [
+                    "Api|Master|STORE SKILLS"
+                ],
+                "summary": "Skills store",
+                "operationId": "88daf0658094d4e3c42fc574e809dfb0",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            }
+        },
+        "/api/skills/show/{id}": {
+            "get": {
+                "tags": [
+                    "API|DATA|SHOW SKILLS"
+                ],
+                "summary": "Skills show",
+                "operationId": "b6e00b046deec0b241c754171a363dc4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            }
+        },
+        "/api/skills/update/{id}": {
+            "put": {
+                "tags": [
+                    "Api|Master|UPDATE SKILLS"
+                ],
+                "summary": "TourismCategory update",
+                "operationId": "ab59c845423820460e66c8b85f0e28ba",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            }
+        },
+        "/api/skills/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "Api|Master|DELETE SKILLS"
+                ],
+                "summary": "Skills delete-file",
+                "operationId": "c5ca22e8433a1fc0f126e39bcbc6a005",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "responseFormatter": {
+                "properties": {
+                    "status": {
+                        "properties": {
+                            "code": {
+                                "type": "integer"
+                            },
+                            "message": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "data": {
+                        "type": "object",
+                        "default": null
+                    }
+                },
+                "type": "object"
+            },
+            "datatableResponseFormatter": {
+                "properties": {
+                    "draw": {
+                        "type": "integer"
+                    },
+                    "recordsTotal": {
+                        "type": "integer"
+                    },
+                    "recordsFiltered": {
+                        "type": "integer"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        },
+                        "default": []
+                    },
+                    "queries": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        },
+                        "default": []
+                    },
+                    "input": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        },
+                        "default": []
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "responses": {
+            "globalResponse": {
+                "description": "OK",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/responseFormatter"
+                        }
+                    }
+                }
+            },
+            "datatableGlobalResponse": {
+                "description": "OK",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/datatableResponseFormatter"
+                        }
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "authBearerToken": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "security": [
+        {
+            "authBearerToken": []
+        }
+    ]
+}

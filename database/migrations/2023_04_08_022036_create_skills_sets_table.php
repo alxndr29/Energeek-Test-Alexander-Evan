@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('skills_sets', function (Blueprint $table) {
-            $table->unsignedBigInteger('candidate_id');
+            $table->unsignedBigInteger('candidate_id')->unsigned();
             $table->foreign('candidate_id')->references('id')->on('candidates');
 
-            $table->unsignedBigInteger('skill_id');
+            $table->unsignedBigInteger('skill_id')->unsigned();
             $table->foreign('skill_id')->references('id')->on('skills');
 
         });

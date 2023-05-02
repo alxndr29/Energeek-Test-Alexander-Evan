@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('skills', function (Blueprint $table) {
             $table->id();
+            $table->uuid('id_hash');
             $table->string('name');
             $table->integer('created_by')->nullable();;
             $table->integer('updated_by')->nullable();;
