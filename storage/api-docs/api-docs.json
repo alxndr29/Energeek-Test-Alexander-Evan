@@ -16,10 +16,195 @@
         }
     ],
     "paths": {
+        "/api/candidates": {
+            "get": {
+                "tags": [
+                    "API|MASTER|INDEX CANDIDATES"
+                ],
+                "summary": "Candidates index",
+                "operationId": "67b4b336050bec33b41c72f9d4c0c97b",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            }
+        },
+        "/api/candidates/store/": {
+            "post": {
+                "tags": [
+                    "Api|Master|STORE CANDIDATES"
+                ],
+                "summary": "Jobs store",
+                "operationId": "3e90293e7f012eca8b8dee29bbeb9d5c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "telepon",
+                                    "year",
+                                    "skill_id",
+                                    "job_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "telepon": {
+                                        "type": "number"
+                                    },
+                                    "year": {
+                                        "type": "number"
+                                    },
+                                    "skill_id": {
+                                        "type": "string"
+                                    },
+                                    "job_id": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            }
+        },
+        "/api/candidates/show/{id}": {
+            "get": {
+                "tags": [
+                    "API|MASTER|SHOW CANDIDATES"
+                ],
+                "summary": "Candidates show",
+                "operationId": "47729c36256d967c2de97b2f3793bf43",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            }
+        },
+        "/api/candidates/update/{id}": {
+            "put": {
+                "tags": [
+                    "Api|MASTER|UPDATE CANDIDATES"
+                ],
+                "summary": "Jobs update",
+                "operationId": "61aac852036c5a2e9374b34d6aa4821a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "telepon",
+                                    "year",
+                                    "skill_id",
+                                    "job_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "telepon": {
+                                        "type": "number"
+                                    },
+                                    "year": {
+                                        "type": "number"
+                                    },
+                                    "skill_id": {
+                                        "type": "string"
+                                    },
+                                    "job_id": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            }
+        },
+        "/api/candidates/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "Api|Master|DELETE CANDIDATES"
+                ],
+                "summary": "Candidates Delete",
+                "operationId": "2b9f433a243b6121d43e93cdcd4007db",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            }
+        },
         "/api/jobs": {
             "get": {
                 "tags": [
-                    "API|DATA|INDEX JOBS"
+                    "API|MASTER|INDEX JOBS"
                 ],
                 "summary": "Jobs index",
                 "operationId": "6b307032ccc7685af33c78dee9152c22",
@@ -39,10 +224,132 @@
                 }
             }
         },
+        "/api/jobs/store/": {
+            "post": {
+                "tags": [
+                    "Api|Master|STORE JOBS"
+                ],
+                "summary": "Jobs store",
+                "operationId": "5a583604437d49b35a00faff5440606b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            }
+        },
+        "/api/jobs/show/{id}": {
+            "get": {
+                "tags": [
+                    "API|MASTER|SHOW JOBS"
+                ],
+                "summary": "Jobs show",
+                "operationId": "7016f88c2a8a323115fa99efb6b99e94",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            }
+        },
+        "/api/jobs/update/{id}": {
+            "put": {
+                "tags": [
+                    "Api|MASTER|UPDATE JOBS"
+                ],
+                "summary": "Candidates update",
+                "operationId": "9af8dbd3f300ab2882cdc7131cce51b1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            }
+        },
+        "/api/jobs/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "Api|Master|DELETE JOBS"
+                ],
+                "summary": "Jobs delete-file",
+                "operationId": "ec52ac78de27234d4981dacb0533669a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            }
+        },
         "/api/skills": {
             "get": {
                 "tags": [
-                    "API|DATA|INDEX SKILLS"
+                    "API|MASTER|INDEX SKILLS"
                 ],
                 "summary": "Skills index",
                 "operationId": "c469f11e34d27b393fce9ef0712b8014",
@@ -97,7 +404,7 @@
         "/api/skills/show/{id}": {
             "get": {
                 "tags": [
-                    "API|DATA|SHOW SKILLS"
+                    "API|MASTER|SHOW SKILLS"
                 ],
                 "summary": "Skills show",
                 "operationId": "b6e00b046deec0b241c754171a363dc4",

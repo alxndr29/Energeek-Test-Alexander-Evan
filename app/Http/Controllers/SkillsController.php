@@ -26,7 +26,7 @@ class SkillsController extends Controller
      */
     /**
      * @OA\Get(
-     *   tags={"API|DATA|INDEX SKILLS"},
+     *   tags={"API|MASTER|INDEX SKILLS"},
      *   path="/api/skills",
      *   summary="Skills index",
      *     @OA\Parameter(
@@ -122,7 +122,7 @@ class SkillsController extends Controller
      */
     /**
      * @OA\Get(
-     *   tags={"API|DATA|SHOW SKILLS"},
+     *   tags={"API|MASTER|SHOW SKILLS"},
      *   path="/api/skills/show/{id}",
      *   summary="Skills show",
      *   @OA\Parameter(

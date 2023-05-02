@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 use App\Http\Resources\JobsResource;
 use App\Interfaces\JobsInterface;
+
 class JobsController extends Controller
 {
     private $jobsInterface;
@@ -26,10 +27,10 @@ class JobsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-   
-     /**
+
+    /**
      * @OA\Get(
-     *   tags={"API|DATA|INDEX JOBS"},
+     *   tags={"API|MASTER|INDEX JOBS"},
      *   path="/api/jobs",
      *   summary="Jobs index",
      *     @OA\Parameter(
@@ -74,9 +75,51 @@ class JobsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    
+     /**
+     * @OA\Post(
+     *   tags={"Api|Master|STORE JOBS"},
+     *   path="/api/jobs/store/",
+     *   summary="Jobs store",
+     *   @OA\RequestBody(
+     *     required=true,
+     *     @OA\JsonContent(
+     *       type="object",
+     *       required={"name"},
+     *       @OA\Property(property="name", type="string")
+     *     )
+     *   ),
+     *   @OA\Response(response="default", ref="#/components/responses/globalResponse")
+     * )
+     */
     public function store(Request $request)
     {
         //
+        DB::beginTransaction();
+        $rules = [
+            'name' => 'required'
+        ];
+        $messages = [];
+        $attributes = [
+            'name' => 'Nama'
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages, $attributes);
+        if ($validator->fails()) {
+            DB::rollBack();
+            return ResponseFormatter::error([
+                'errors' => $validator->errors()
+            ], 'Silahkan isi form dengan benar terlebih dahulu', 422);
+        }
+        $jobs = $this->jobsInterface->create(
+            $request->all()
+        );
+        DB::commit();
+        return (new JobsResource($jobs))->additional([
+            'status' => [
+                'code' => 200,
+                'message' => 'Data berhasil disimpan'
+            ]
+        ])->response()->setStatusCode(200);
     }
 
     /**
@@ -85,9 +128,35 @@ class JobsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    /**
+     * @OA\Get(
+     *   tags={"API|MASTER|SHOW JOBS"},
+     *   path="/api/jobs/show/{id}",
+     *   summary="Jobs show",
+     *   @OA\Parameter(
+     *     name="id",
+     *     in="path",
+     *     required=true,
+     *     @OA\Schema(type="string")
+     *   ),
+     *   @OA\Response(response="default", ref="#/components/responses/globalResponse")
+     * )
+     */
     public function show($id)
     {
         //
+        $jobs = $this->jobsInterface->findByIdHash(
+            $id
+        );
+        if (empty($jobs)) {
+            return ResponseFormatter::error([], 'Data tidak ditemukan', 404);
+        }
+        return (new JobsResource($jobs))->additional([
+            'status' => [
+                'code' => 200,
+                'message' => 'Data berhasil ditampilkan'
+            ]
+        ])->response()->setStatusCode(200);
     }
 
     /**
@@ -108,9 +177,57 @@ class JobsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    /**
+     * @OA\Put(
+     *   tags={"Api|MASTER|UPDATE JOBS"},
+     *   path="/api/jobs/update/{id}",
+     *   summary="Candidates update",
+     *   @OA\Parameter(
+     *     name="id",
+     *     in="path",
+     *     required=true,
+     *     @OA\Schema(type="string")
+     *   ),
+     *   @OA\RequestBody(
+     *     required=true,
+     *     @OA\JsonContent(
+     *       type="object",
+     *       required={"name"},
+     *       @OA\Property(property="name", type="string")
+     *     )
+     *   ),
+     *   @OA\Response(response="default", ref="#/components/responses/globalResponse")
+     * )
+     */
     public function update(Request $request, $id)
     {
         //
+        DB::beginTransaction();
+        $rules = [
+            'name' => 'required'
+        ];
+        $messages = [];
+        $attributes = [
+            'name' => 'Nama'
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages, $attributes);
+        if ($validator->fails()) {
+            DB::rollBack();
+            return ResponseFormatter::error([
+                'errors' => $validator->errors()
+            ], 'Silahkan isi form dengan benar terlebih dahulu', 422);
+        }
+        $jobs = $this->jobsInterface->updateByIdHash(
+            $id,
+            $request->all()
+        );
+        DB::commit();
+        return (new JobsResource($jobs))->additional([
+            'status' => [
+                'code' => 200,
+                'message' => 'Data berhasil disimpan'
+            ]
+        ])->response()->setStatusCode(200);
     }
 
     /**
@@ -119,8 +236,32 @@ class JobsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    /**
+     * @OA\Delete(
+     *   tags={"Api|Master|DELETE JOBS"},
+     *   path="/api/jobs/delete/{id}",
+     *   summary="Jobs delete-file",
+     *   @OA\Parameter(
+     *   name="id",
+     *   in="path",
+     *   required=true,
+     *   @OA\Schema(type="string")
+     *   ),
+     *   @OA\Response(response="default", ref="#/components/responses/globalResponse")
+     * )
+     */
+
     public function destroy($id)
     {
         //
+        DB::beginTransaction();
+        $jobs = $this->jobsInterface->deletedByIdHash($id);
+        if (empty($jobs)) {
+            DB::rollBack();
+            return ResponseFormatter::error([], 'Data gagal dihapus', 400);
+        }
+        DB::commit();
+        return ResponseFormatter::success($jobs, 'Data berhasil dihapus', 200);
     }
 }

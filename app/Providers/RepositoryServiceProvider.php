@@ -19,6 +19,7 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $this->app->bind(Interfaces\SkillsInterface::class, Repositories\SkiilsRepository::class);
         $this->app->bind(Interfaces\JobsInterface::class, Repositories\JobsRepository::class);
+        $this->app->bind(Interfaces\CandidatesInterface::class, Repositories\CandidatesRepository::class);
     }
 
     /**
