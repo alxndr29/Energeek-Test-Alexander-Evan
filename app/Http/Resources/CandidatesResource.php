@@ -21,14 +21,13 @@ class CandidatesResource extends JsonResource
             'year' => $this->year,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'skills' => SkillsResource::collection($this->skills) ?? null,
-            'jobs' => JobsResource::make($this->jobs) ?? null
-            // 'pivot' => $this->whenPivotLoaded('skills', function () {
-            //     return [
-            //         'id' => $this->pivot->id_hash,
-            //         'name' => $this->pivot0->name
-            //     ];
-            // })
+            'skills' => SkillsResource::collection($this->whenLoaded('skills')) ?? null,
+            'jobs' => new JobsResource($this->whenLoaded('jobs')) ?? null,
+            'pivot' => $this->whenPivotLoaded('skills_sets', function () {
+                return [
+                    'id' => $this->pivot->skill_id
+                ];
+            })
         ];
         return $result;
     }

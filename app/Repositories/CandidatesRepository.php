@@ -7,9 +7,10 @@ use App\Models\Candidates;
 
 class CandidatesRepository implements CandidatesInterface
 {
-    public function getAll($select = [], $search = null, $sortOption = [], $paginateOption = [])
+    public function getAll($select = [], $search = null, $sortOption = [], $paginateOption = [],  $reformat = null)
     {
         $candidates = Candidates::query();
+        
         if (isset($select) && count($select) > 0) {
             $candidates->addSelect($select);
         }
@@ -23,6 +24,9 @@ class CandidatesRepository implements CandidatesInterface
             $candidates = $candidates->{$paginateOption['method']}(perPage: $paginateOption['length'] ?? 10, page: $paginateOption['page'] ?? null);
         } else {
             $candidates = $candidates->get();
+        }
+        if (isset($reformat) && is_callable($reformat)) {
+            $candidates = $reformat($candidates);
         }
         return $candidates;
     }

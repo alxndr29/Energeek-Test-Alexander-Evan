@@ -6,7 +6,7 @@ use App\Models\Jobs;
 
 interface JobsInterface
 {
-    public function getAll($select = [], $search = null, $sortOption = [], $paginateOption = []);
+    public function getAll($select = [], $search = null, $sortOption = [], $paginateOption = [],  $reformat = null);
     public function findById($id, $method = 'findOrFail');
     public function findByIdHash($id, $withRelations = [], $method = 'firstOrFail');
     public function create($data);

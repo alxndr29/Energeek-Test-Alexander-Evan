@@ -8,7 +8,7 @@ use App\Models\Jobs;
 class JobsRepository implements JobsInterface
 {
 
-    public function getAll($select = [], $search = null, $sortOption = [], $paginateOption = [])
+    public function getAll($select = [], $search = null, $sortOption = [], $paginateOption = [], $reformat = null)
     {
         $jobs = Jobs::query();
         if (isset($select) && count($select) > 0) {
@@ -24,6 +24,9 @@ class JobsRepository implements JobsInterface
             $jobs =  $jobs->{$paginateOption['method']}(perPage: $paginateOption['length'] ?? 10, page: $paginateOption['page'] ?? null);
         } else {
             $jobs =  $jobs->get();
+        }
+        if (isset($reformat) && is_callable($reformat)) {
+            $jobs = $reformat($jobs);
         }
         return $jobs;
     }

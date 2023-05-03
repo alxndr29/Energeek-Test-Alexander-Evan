@@ -8,7 +8,7 @@ use App\Models\Skiils;
 class SkiilsRepository implements SkillsInterface
 {
 
-    public function getAll($select = [], $search = null, $sortOption = [], $paginateOption = [])
+    public function getAll($select = [], $search = null, $sortOption = [], $paginateOption = [],  $reformat = null)
     {
         $skills = Skiils::query();
         if (isset($select) && count($select) > 0) {
@@ -24,6 +24,9 @@ class SkiilsRepository implements SkillsInterface
             $skills =  $skills->{$paginateOption['method']}(perPage: $paginateOption['length'] ?? 10, page: $paginateOption['page'] ?? null);
         } else {
             $skills =  $skills->get();
+        }
+        if (isset($reformat) && is_callable($reformat)) {
+            $skills = $reformat($skills);
         }
         return $skills;
     }

@@ -22,5 +22,6 @@ class Candidates extends Model
     public function skills()
     {
         return $this->belongsToMany(Skiils::class, 'skills_sets', 'candidate_id', 'skill_id');
+        // return $this->belongsToMany(Skiils::class, 'skills_sets', 'candidate_id', 'skill_id')->withPivot('candidate_id','skill_id');
     }
 }

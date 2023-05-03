@@ -84,6 +84,14 @@ class CandidatesController extends Controller
                 'length' => $request->limit,
                 'page' => $request->currentPage
             ],
+            reformat: function ($data) {
+                return $data->through(function ($item, $key) {
+                    $result = $item->toArray();
+                    $result['id'] = $result['id_hash'];
+                    unset($result['id_hash']);
+                    return $result;
+                });
+            }
         );
         return ResponseFormatter::success($jobs, 'Data berhasil ditampilkan');
     }
