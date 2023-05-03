@@ -19,7 +19,7 @@
         "/api/candidates": {
             "get": {
                 "tags": [
-                    "API|MASTER|INDEX CANDIDATES"
+                    "API|MASTER|CANDIDATES"
                 ],
                 "summary": "Candidates index",
                 "operationId": "67b4b336050bec33b41c72f9d4c0c97b",
@@ -29,6 +29,34 @@
                         "in": "query",
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "sortBy",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "orderBy",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "currentPage",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
                         }
                     }
                 ],
@@ -42,7 +70,7 @@
         "/api/candidates/store/": {
             "post": {
                 "tags": [
-                    "Api|Master|STORE CANDIDATES"
+                    "API|MASTER|CANDIDATES"
                 ],
                 "summary": "Jobs store",
                 "operationId": "3e90293e7f012eca8b8dee29bbeb9d5c",
@@ -94,7 +122,7 @@
         "/api/candidates/show/{id}": {
             "get": {
                 "tags": [
-                    "API|MASTER|SHOW CANDIDATES"
+                    "API|MASTER|CANDIDATES"
                 ],
                 "summary": "Candidates show",
                 "operationId": "47729c36256d967c2de97b2f3793bf43",
@@ -118,7 +146,7 @@
         "/api/candidates/update/{id}": {
             "put": {
                 "tags": [
-                    "Api|MASTER|UPDATE CANDIDATES"
+                    "API|MASTER|CANDIDATES"
                 ],
                 "summary": "Jobs update",
                 "operationId": "61aac852036c5a2e9374b34d6aa4821a",
@@ -180,7 +208,7 @@
         "/api/candidates/delete/{id}": {
             "delete": {
                 "tags": [
-                    "Api|Master|DELETE CANDIDATES"
+                    "API|MASTER|CANDIDATES"
                 ],
                 "summary": "Candidates Delete",
                 "operationId": "2b9f433a243b6121d43e93cdcd4007db",
@@ -204,7 +232,7 @@
         "/api/jobs": {
             "get": {
                 "tags": [
-                    "API|MASTER|INDEX JOBS"
+                    "API|MASTER|JOBS"
                 ],
                 "summary": "Jobs index",
                 "operationId": "6b307032ccc7685af33c78dee9152c22",
@@ -214,6 +242,34 @@
                         "in": "query",
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "sortBy",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "orderBy",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "currentPage",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
                         }
                     }
                 ],
@@ -227,7 +283,7 @@
         "/api/jobs/store/": {
             "post": {
                 "tags": [
-                    "Api|Master|STORE JOBS"
+                    "API|MASTER|JOBS"
                 ],
                 "summary": "Jobs store",
                 "operationId": "5a583604437d49b35a00faff5440606b",
@@ -259,7 +315,7 @@
         "/api/jobs/show/{id}": {
             "get": {
                 "tags": [
-                    "API|MASTER|SHOW JOBS"
+                    "API|MASTER|JOBS"
                 ],
                 "summary": "Jobs show",
                 "operationId": "7016f88c2a8a323115fa99efb6b99e94",
@@ -283,7 +339,7 @@
         "/api/jobs/update/{id}": {
             "put": {
                 "tags": [
-                    "Api|MASTER|UPDATE JOBS"
+                    "API|MASTER|JOBS"
                 ],
                 "summary": "Candidates update",
                 "operationId": "9af8dbd3f300ab2882cdc7131cce51b1",
@@ -325,7 +381,7 @@
         "/api/jobs/delete/{id}": {
             "delete": {
                 "tags": [
-                    "Api|Master|DELETE JOBS"
+                    "API|MASTER|JOBS"
                 ],
                 "summary": "Jobs delete-file",
                 "operationId": "ec52ac78de27234d4981dacb0533669a",
@@ -349,7 +405,7 @@
         "/api/skills": {
             "get": {
                 "tags": [
-                    "API|MASTER|INDEX SKILLS"
+                    "API|MASTER|SKILLS"
                 ],
                 "summary": "Skills index",
                 "operationId": "c469f11e34d27b393fce9ef0712b8014",
@@ -359,6 +415,34 @@
                         "in": "query",
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "sortBy",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "orderBy",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "currentPage",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
                         }
                     }
                 ],
@@ -372,7 +456,7 @@
         "/api/skills/store/": {
             "post": {
                 "tags": [
-                    "Api|Master|STORE SKILLS"
+                    "API|MASTER|SKILLS"
                 ],
                 "summary": "Skills store",
                 "operationId": "88daf0658094d4e3c42fc574e809dfb0",
@@ -404,7 +488,7 @@
         "/api/skills/show/{id}": {
             "get": {
                 "tags": [
-                    "API|MASTER|SHOW SKILLS"
+                    "API|MASTER|SKILLS"
                 ],
                 "summary": "Skills show",
                 "operationId": "b6e00b046deec0b241c754171a363dc4",
@@ -428,7 +512,7 @@
         "/api/skills/update/{id}": {
             "put": {
                 "tags": [
-                    "Api|Master|UPDATE SKILLS"
+                    "API|MASTER|SKILLS"
                 ],
                 "summary": "TourismCategory update",
                 "operationId": "ab59c845423820460e66c8b85f0e28ba",
@@ -470,7 +554,7 @@
         "/api/skills/delete/{id}": {
             "delete": {
                 "tags": [
-                    "Api|Master|DELETE SKILLS"
+                    "API|MASTER|SKILLS"
                 ],
                 "summary": "Skills delete-file",
                 "operationId": "c5ca22e8433a1fc0f126e39bcbc6a005",

@@ -8,7 +8,7 @@ use App\Models\Skiils;
 class SkiilsRepository implements SkillsInterface
 {
 
-    public function getAll($select = [], $search = null)
+    public function getAll($select = [], $search = null, $sortOption = [], $paginateOption = [])
     {
         $skills = Skiils::query();
         if (isset($select) && count($select) > 0) {
@@ -17,7 +17,15 @@ class SkiilsRepository implements SkillsInterface
         if (isset($search) && is_callable($search)) {
             $skills->where($search);
         }
-        return $skills->get();
+        if (isset($sortOption['orderCol']) && !empty($sortOption['orderCol'])) {
+            $skills->orderBy($sortOption['orderCol'], $sortOption['orderDir'] ?? 'ASC');
+        }
+        if (isset($paginateOption['method']) && !empty($paginateOption['method'])) {
+            $skills =  $skills->{$paginateOption['method']}(perPage: $paginateOption['length'] ?? 10, page: $paginateOption['page'] ?? null);
+        } else {
+            $skills =  $skills->get();
+        }
+        return $skills;
     }
     //pake find normal
     public function findById($id, $withRelations = [], $method = 'find')

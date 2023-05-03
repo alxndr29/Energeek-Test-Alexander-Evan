@@ -8,7 +8,7 @@ use App\Models\Jobs;
 class JobsRepository implements JobsInterface
 {
 
-    public function getAll($select = [], $search = null)
+    public function getAll($select = [], $search = null, $sortOption = [], $paginateOption = [])
     {
         $jobs = Jobs::query();
         if (isset($select) && count($select) > 0) {
@@ -17,7 +17,15 @@ class JobsRepository implements JobsInterface
         if (isset($search) && is_callable($search)) {
             $jobs->where($search);
         }
-        return $jobs->get();
+        if (isset($sortOption['orderCol']) && !empty($sortOption['orderCol'])) {
+            $jobs->orderBy($sortOption['orderCol'], $sortOption['orderDir'] ?? 'ASC');
+        }
+        if (isset($paginateOption['method']) && !empty($paginateOption['method'])) {
+            $jobs =  $jobs->{$paginateOption['method']}(perPage: $paginateOption['length'] ?? 10, page: $paginateOption['page'] ?? null);
+        } else {
+            $jobs =  $jobs->get();
+        }
+        return $jobs;
     }
     //pake find normal
     public function findById($id, $withRelations = [], $method = 'find')

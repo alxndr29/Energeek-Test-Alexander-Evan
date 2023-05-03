@@ -12,6 +12,7 @@ use App\Interfaces\SkillsInterface;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
+
 class SkillsController extends Controller
 {
     private $skillInterface;
@@ -26,13 +27,33 @@ class SkillsController extends Controller
      */
     /**
      * @OA\Get(
-     *   tags={"API|MASTER|INDEX SKILLS"},
+     *   tags={"API|MASTER|SKILLS"},
      *   path="/api/skills",
      *   summary="Skills index",
      *     @OA\Parameter(
      *     name="search",
      *     in="query",
      *     @OA\Schema(type="string")
+     *   ),
+     *   @OA\Parameter(
+     *     name="limit",
+     *     in="query",
+     *     @OA\Schema(type="integer")
+     *   ),
+     *   @OA\Parameter(
+     *     name="sortBy",
+     *     in="query",
+     *     @OA\Schema(type="string")
+     *   ),
+     *   @OA\Parameter(
+     *     name="orderBy",
+     *     in="query",
+     *     @OA\Schema(type="string")
+     *   ),
+     *   @OA\Parameter(
+     *     name="currentPage",
+     *     in="query",
+     *     @OA\Schema(type="integer")
      *   ),
      *   @OA\Response(response="default", ref="#/components/responses/globalResponse")
      * )
@@ -48,8 +69,17 @@ class SkillsController extends Controller
                 'updated_at'
             ],
             search: function (Builder $query) use ($request) {
-                $query->where('name', 'LIKE', "%{$request->search}%");
-            }
+                $query->where('name', 'ILIKE', "%{$request->search}%");
+            },
+            sortOption: [
+                'orderCol' => $request->sortBy,
+                'orderDir' => $request->orderBy
+            ],
+            paginateOption: [
+                'method' => 'paginate',
+                'length' => $request->limit,
+                'page' => $request->currentPage
+            ],
         );
         return ResponseFormatter::success($skill, 'Data berhasil ditampilkan');
     }
@@ -60,7 +90,8 @@ class SkillsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    { }
+    {
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -70,7 +101,7 @@ class SkillsController extends Controller
      */
     /**
      * @OA\Post(
-     *   tags={"Api|Master|STORE SKILLS"},
+     *   tags={"API|MASTER|SKILLS"},
      *   path="/api/skills/store/",
      *   summary="Skills store",
      *   @OA\RequestBody(
@@ -111,7 +142,6 @@ class SkillsController extends Controller
                 'message' => 'Data berhasil disimpan'
             ]
         ])->response()->setStatusCode(200);
-       
     }
 
     /**
@@ -122,7 +152,7 @@ class SkillsController extends Controller
      */
     /**
      * @OA\Get(
-     *   tags={"API|MASTER|SHOW SKILLS"},
+     *   tags={"API|MASTER|SKILLS"},
      *   path="/api/skills/show/{id}",
      *   summary="Skills show",
      *   @OA\Parameter(
@@ -171,7 +201,7 @@ class SkillsController extends Controller
 
     /**
      * @OA\Put(
-     *   tags={"Api|Master|UPDATE SKILLS"},
+     *   tags={"API|MASTER|SKILLS"},
      *   path="/api/skills/update/{id}",
      *   summary="TourismCategory update",
      *   @OA\Parameter(
@@ -232,7 +262,7 @@ class SkillsController extends Controller
 
     /**
      * @OA\Delete(
-     *   tags={"Api|Master|DELETE SKILLS"},
+     *   tags={"API|MASTER|SKILLS"},
      *   path="/api/skills/delete/{id}",
      *   summary="Skills delete-file",
      *   @OA\Parameter(

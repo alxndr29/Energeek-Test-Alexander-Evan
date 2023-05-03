@@ -7,7 +7,7 @@ use App\Models\Candidates;
 
 class CandidatesRepository implements CandidatesInterface
 {
-    public function getAll($select = [], $search = null)
+    public function getAll($select = [], $search = null, $sortOption = [], $paginateOption = [])
     {
         $candidates = Candidates::query();
         if (isset($select) && count($select) > 0) {
@@ -16,7 +16,15 @@ class CandidatesRepository implements CandidatesInterface
         if (isset($search) && is_callable($search)) {
             $candidates->where($search);
         }
-        return $candidates->get();
+        if (isset($sortOption['orderCol']) && !empty($sortOption['orderCol'])) {
+            $candidates->orderBy($sortOption['orderCol'], $sortOption['orderDir'] ?? 'ASC');
+        }
+        if (isset($paginateOption['method']) && !empty($paginateOption['method'])) {
+            $candidates = $candidates->{$paginateOption['method']}(perPage: $paginateOption['length'] ?? 10, page: $paginateOption['page'] ?? null);
+        } else {
+            $candidates = $candidates->get();
+        }
+        return $candidates;
     }
     public function create($data)
     {

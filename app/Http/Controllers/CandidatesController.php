@@ -29,13 +29,33 @@ class CandidatesController extends Controller
 
     /**
      * @OA\Get(
-     *   tags={"API|MASTER|INDEX CANDIDATES"},
+     *   tags={"API|MASTER|CANDIDATES"},
      *   path="/api/candidates",
      *   summary="Candidates index",
      *     @OA\Parameter(
      *     name="search",
      *     in="query",
      *     @OA\Schema(type="string")
+     *   ),
+     *   @OA\Parameter(
+     *     name="limit",
+     *     in="query",
+     *     @OA\Schema(type="integer")
+     *   ),
+     *   @OA\Parameter(
+     *     name="sortBy",
+     *     in="query",
+     *     @OA\Schema(type="string")
+     *   ),
+     *   @OA\Parameter(
+     *     name="orderBy",
+     *     in="query",
+     *     @OA\Schema(type="string")
+     *   ),
+     *   @OA\Parameter(
+     *     name="currentPage",
+     *     in="query",
+     *     @OA\Schema(type="integer")
      *   ),
      *   @OA\Response(response="default", ref="#/components/responses/globalResponse")
      * )
@@ -53,8 +73,17 @@ class CandidatesController extends Controller
                 'updated_at'
             ],
             search: function (Builder $query) use ($request) {
-                $query->where('name', 'LIKE', "%{$request->search}%");
-            }
+                $query->where('name', 'ILIKE', "%{$request->search}%");
+            },
+            sortOption: [
+                'orderCol' => $request->sortBy,
+                'orderDir' => $request->orderBy
+            ],
+            paginateOption: [
+                'method' => 'paginate',
+                'length' => $request->limit,
+                'page' => $request->currentPage
+            ],
         );
         return ResponseFormatter::success($jobs, 'Data berhasil ditampilkan');
     }
@@ -78,7 +107,7 @@ class CandidatesController extends Controller
 
     /**
      * @OA\Post(
-     *   tags={"Api|Master|STORE CANDIDATES"},
+     *   tags={"API|MASTER|CANDIDATES"},
      *   path="/api/candidates/store/",
      *   summary="Jobs store",
      *   @OA\RequestBody(
@@ -146,7 +175,7 @@ class CandidatesController extends Controller
 
     /**
      * @OA\Get(
-     *   tags={"API|MASTER|SHOW CANDIDATES"},
+     *   tags={"API|MASTER|CANDIDATES"},
      *   path="/api/candidates/show/{id}",
      *   summary="Candidates show",
      *   @OA\Parameter(
@@ -198,7 +227,7 @@ class CandidatesController extends Controller
 
     /**
      * @OA\Put(
-     *   tags={"Api|MASTER|UPDATE CANDIDATES"},
+     *   tags={"API|MASTER|CANDIDATES"},
      *   path="/api/candidates/update/{id}",
      *   summary="Jobs update",
      *   @OA\Parameter(
@@ -275,7 +304,7 @@ class CandidatesController extends Controller
 
     /**
      * @OA\Delete(
-     *   tags={"Api|Master|DELETE CANDIDATES"},
+     *   tags={"API|MASTER|CANDIDATES"},
      *   path="/api/candidates/delete/{id}",
      *   summary="Candidates Delete",
      *   @OA\Parameter(
